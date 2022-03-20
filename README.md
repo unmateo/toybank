@@ -1,5 +1,5 @@
 # Toybank
-#### An approach on modelling a finantial institution API.
+#### An approach on modelling a finantial institution API
 ----
 
 This project was written on _Python 3.10.3_ and was only tested for that version.
@@ -27,10 +27,14 @@ For testing, use [pytest](https://docs.pytest.org/en/7.1.x/), you can run them u
 
 ## Technical Considerations
 
+__This API was developed in less than a day. It should be considered a POC and not production ready.__
+
 The following features have not been developed because of time constraints.
 Next to each of them, you'll find how I'd have probably approached them
 
 - docstrings: at least in the Services, as they hold some business rules
+- api spec docs: many not required but desired specs are missing (endpoint descriptions, examples, errors,etc.)
+- api versioning: before a release, the API should be versioned
 - proper db session handling: session pooling and transaction per request should be implemented
 - testing: many cases are not being tested
 - logging: a thin layer upon python's standard logging module providing an abstraction over it
