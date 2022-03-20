@@ -30,6 +30,7 @@ For testing, use [pytest](https://docs.pytest.org/en/7.1.x/), you can run them u
 The following features have not been developed because of time constraints.
 Next to each of them, you'll find how I'd have probably approached them
 
+- docstrings: at least in the Services, as they hold some business rules
 - logging: a thin layer upon python's standard logging module providing an abstraction over it
 - config: [pydantic's settings management](https://pydantic-docs.helpmanual.io/usage/settings/) allows secrets, defaults and validations
 - error handling: custom business exceptions that get automatically translated into the suitable API response
@@ -52,3 +53,4 @@ Some notes on the directory structure:
 - balance: should we enforce a minimum?
 - security: should we secure the endpoints? how?
 - more generic endpoints as /accounts, /transfers, etc. might me useful
+- amounts as cents: I'm using integers for all amount & balance fields to avoid floating point issues

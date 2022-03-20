@@ -7,8 +7,12 @@ from ..models.account import Account
 from ..models.account import AccountCreate
 from ..models.account import CustomerAccountCreate
 from ..models.customer import CustomerCreate
+from ..models.transfer import AccountTransferCreate
+from ..models.transfer import CustomerAccountTransferCreate
+from ..models.transfer import Transfer
 from ..services.accounts import AccountsService
 from ..services.customers import CustomersService
+from ..services.transfers import TransfersService
 
 
 router = APIRouter(prefix="/customers")
@@ -48,3 +52,47 @@ def create_customer_account(
     account_create = AccountCreate(customer_id=customer_id, **payload.dict())
     account = AccountsService.create(db, account_create)
     return account
+
+
+@router.post(
+    "/{customer_id}/accounts/{account_id}/transfers",
+    status_code=201,
+    response_model=Transfer,
+)
+def create_transfer(
+    customer_id: str,
+    account_id: str,
+    payload: CustomerAccountTransferCreate,
+    db=Depends(s),
+):
+    if not CustomersService.get_by_id(db, customer_id):
+        return Response(status_code=404)
+    account = AccountsService.get_by_id(db, account_id)
+    if not account:
+        return Response(status_code=404)
+    if account.customer_id != customer_id:
+        return Response(status_code=400)
+    transfer_create = AccountTransferCreate(
+        sender_account_id=account_id, **payload.dict()
+    )
+    transfer = TransfersService.create(db, transfer_create)
+    return transfer
+
+
+@router.get(
+    "/{customer_id}/accounts/{account_id}/transfers",
+    status_code=200,
+)
+def get_account_transfers(
+    customer_id: str,
+    account_id: str,
+    db=Depends(s),
+):
+    if not CustomersService.get_by_id(db, customer_id):
+        return Response(status_code=404)
+    account = AccountsService.get_by_id(db, account_id)
+    if not account:
+        return Response(status_code=404)
+    if account.customer_id != customer_id:
+        return Response(status_code=400)
+    return TransfersService.get_by_account_id(db, account_id)
