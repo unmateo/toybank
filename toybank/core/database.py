@@ -1,4 +1,5 @@
 from contextlib import contextmanager
+from typing import Generator
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -9,7 +10,7 @@ engine = create_engine("sqlite:///toybank.db?check_same_thread=false")
 
 
 @contextmanager
-def get_session() -> Session:
+def get_session() -> Generator[Session, None, None]:
     """
     Yields a DB session on given datasource.
     On exception, rollbacks session.

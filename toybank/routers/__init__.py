@@ -1,5 +1,5 @@
-from .customers import router as customers_router
+from .customers import customers
 
 __all__ = [
-    "customers_router",
+    "customers",
 ]

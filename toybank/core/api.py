@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 
-from ..routers import customers_router
+from ..routers import customers
 
 
-def create_app():
-    app = FastAPI()
-    app.include_router(customers_router)
+def create_app() -> FastAPI:
+    app = FastAPI(title="Toybank")
+    app.include_router(customers)
     return app

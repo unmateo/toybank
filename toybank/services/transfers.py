@@ -23,5 +23,5 @@ class TransfersService:
         criterion = or_(
             Transfer.recipient_account_id == account_id,
             Transfer.sender_account_id == account_id,
-        )
+        )  # type: ignore
         return db.query(Transfer).filter(criterion).all()

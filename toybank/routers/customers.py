@@ -16,31 +16,33 @@ from ..services.transfers import TransfersService
 from toybank.core.enums import RouterTags
 
 
-router = APIRouter(prefix="/customers")
+customers = APIRouter(prefix="/customers")
 
 
-@router.get("", tags=[RouterTags.CUSTOMERS])
+@customers.get("", tags=[RouterTags.CUSTOMERS])
 def get_all_customers(db=Depends(s)):
     return CustomersService.get_all(db)
 
 
-@router.get("/{customer_id}", tags=[RouterTags.CUSTOMERS])
+@customers.get("/{customer_id}", tags=[RouterTags.CUSTOMERS])
 def get_one_customer(customer_id: str, db=Depends(s)):
     return CustomersService.get_by_id(db, customer_id)
 
 
-@router.post("", status_code=201, tags=[RouterTags.CUSTOMERS])
+@customers.post("", status_code=201, tags=[RouterTags.CUSTOMERS])
 def create_customer(payload: CustomerCreate, db=Depends(s)):
     return CustomersService.create(db, payload)
 
 
-@router.get("/{customer_id}/accounts", tags=[RouterTags.CUSTOMERS, RouterTags.ACCOUNTS])
+@customers.get(
+    "/{customer_id}/accounts", tags=[RouterTags.CUSTOMERS, RouterTags.ACCOUNTS]
+)
 def get_customer_accounts(customer_id: str, db=Depends(s)):
     CustomersService.get_by_id(db, customer_id)
     return AccountsService.get_by_customer_id(db, customer_id)
 
 
-@router.post(
+@customers.post(
     "/{customer_id}/accounts",
     status_code=201,
     response_model=Account,
@@ -55,7 +57,7 @@ def create_customer_account(
     return account
 
 
-@router.post(
+@customers.post(
     "/{customer_id}/accounts/{account_id}/transfers",
     status_code=201,
     response_model=Transfer,
@@ -78,7 +80,7 @@ def create_transfer(
     return transfer
 
 
-@router.get(
+@customers.get(
     "/{customer_id}/accounts/{account_id}/transfers",
     status_code=200,
     tags=[RouterTags.CUSTOMERS, RouterTags.ACCOUNTS, RouterTags.TRANSFERS],

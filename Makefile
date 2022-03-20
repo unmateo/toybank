@@ -8,7 +8,7 @@ install-dev:
 install-prd:
 	pip install -r requirements/prd.txt
 lint:
-	python -m black .
+	python -m black . && python -m mypy toybank
 run:
 	uvicorn toybank.app:app
 test:

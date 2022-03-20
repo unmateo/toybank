@@ -24,3 +24,4 @@ def test_openapi(client):
 def dump_openapi(openapi):
     with open(OPENAPI, "w") as file:
         dump(openapi, file, indent=4)
+        file.write("\n")
