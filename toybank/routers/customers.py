@@ -25,10 +25,7 @@ def get_all_customers(db=Depends(s)):
 
 @router.get("/{customer_id}")
 def get_one_customer(customer_id: str, db=Depends(s)):
-    customer = CustomersService.get_by_id(db, customer_id)
-    if not customer:
-        return Response(status_code=404)
-    return customer
+    return CustomersService.get_by_id(db, customer_id)
 
 
 @router.post("", status_code=201)
@@ -38,8 +35,7 @@ def create_customer(payload: CustomerCreate, db=Depends(s)):
 
 @router.get("/{customer_id}/accounts")
 def get_customer_accounts(customer_id: str, db=Depends(s)):
-    if not CustomersService.get_by_id(db, customer_id):
-        return Response(status_code=404)
+    CustomersService.get_by_id(db, customer_id)
     return AccountsService.get_by_customer_id(db, customer_id)
 
 
@@ -47,8 +43,7 @@ def get_customer_accounts(customer_id: str, db=Depends(s)):
 def create_customer_account(
     customer_id: str, payload: CustomerAccountCreate, db=Depends(s)
 ):
-    if not CustomersService.get_by_id(db, customer_id):
-        return Response(status_code=404)
+    CustomersService.get_by_id(db, customer_id)
     account_create = AccountCreate(customer_id=customer_id, **payload.dict())
     account = AccountsService.create(db, account_create)
     return account
@@ -65,11 +60,8 @@ def create_transfer(
     payload: CustomerAccountTransferCreate,
     db=Depends(s),
 ):
-    if not CustomersService.get_by_id(db, customer_id):
-        return Response(status_code=404)
+    CustomersService.get_by_id(db, customer_id)
     account = AccountsService.get_by_id(db, account_id)
-    if not account:
-        return Response(status_code=404)
     if account.customer_id != customer_id:
         return Response(status_code=400)
     transfer_create = AccountTransferCreate(
@@ -88,11 +80,8 @@ def get_account_transfers(
     account_id: str,
     db=Depends(s),
 ):
-    if not CustomersService.get_by_id(db, customer_id):
-        return Response(status_code=404)
+    CustomersService.get_by_id(db, customer_id)
     account = AccountsService.get_by_id(db, account_id)
-    if not account:
-        return Response(status_code=404)
     if account.customer_id != customer_id:
         return Response(status_code=400)
     return TransfersService.get_by_account_id(db, account_id)

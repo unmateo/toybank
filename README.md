@@ -31,10 +31,10 @@ The following features have not been developed because of time constraints.
 Next to each of them, you'll find how I'd have probably approached them
 
 - docstrings: at least in the Services, as they hold some business rules
+- proper db session handling: session pooling and transaction per request should be implemented
+- testing: many cases are not being tested
 - logging: a thin layer upon python's standard logging module providing an abstraction over it
 - config: [pydantic's settings management](https://pydantic-docs.helpmanual.io/usage/settings/) allows secrets, defaults and validations
-- error handling: custom business exceptions that get automatically translated into the suitable API response
-  - these should be raised at service layer and handled at router/api layer
 - postgresql: most suitable for a production environment
 - docker: for easier collaboration, deployment, scaling and monitoring
 - docker-compose: for a better development flow
