@@ -16,7 +16,6 @@ now = datetime.utcnow
 
 
 class BaseModel(SQLModel, table=False):
-    """Abstract base model providing generic fields."""
 
     id: str = Field(default_factory=uuid, primary_key=True)
     created_at: Optional[datetime] = Field(
