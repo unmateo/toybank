@@ -3,13 +3,15 @@ def test_get_all_customers_no_customers(client):
     assert response.status_code == 200
 
 
-def test_get_all_customers_with_customers(client, a_customer):
+def test_get_all_customers_with_customers(client, given_customer):
+    a_customer = given_customer()
     response = client.get("/customers")
     assert response.status_code == 200
     assert_is_customer_response(a_customer, response.json()[0])
 
 
-def test_get_one_customer(client, a_customer):
+def test_get_one_customer(client, given_customer):
+    a_customer = given_customer()
     response = client.get(f"/customers/{a_customer.id}")
     assert response.status_code == 200
     assert_is_customer_response(a_customer, response.json())

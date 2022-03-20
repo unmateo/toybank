@@ -25,7 +25,7 @@ There's a precommit hook that runs the linter and you can manually run it using 
 
 For testing, use [pytest](https://docs.pytest.org/en/7.1.x/), you can run them using `make test`.
 
-## Considerations
+## Technical Considerations
 
 The following features have not been developed because of time constraints.
 Next to each of them, you'll find how I'd have probably approached them
@@ -45,3 +45,10 @@ Some notes on the directory structure:
 - routers: each component's HTTP rest API capabilities, focusing on input & output
 - services: the actual business logic (in this case, mostly persistance)
   - a non HTTP rest API would directly use this layer skipping the routers
+
+## Business considerations:
+
+- unique fields: Customer.email, Account.alias should probably have Unique constraints
+- balance: should we enforce a minimum?
+- security: should we secure the endpoints? how?
+- more generic endpoints as /accounts, /transfers, etc. might me useful
